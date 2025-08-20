@@ -18,42 +18,62 @@
 #include <stdio.h>
 
 enum layer_number {
-  _QWERTY = 0,
-  _LOWER,
-  _RAISE,
-  _MO3,
-  _MO4,
-  _ADJUST
+    _QWERTY = 0,
+    _DVORAK,
+    _LOWER,
+    _RAISE,
+    _ADJUST
 };
 
+#define QWERTY PDF(_QWERTY)
+#define DVORAK PDF(_DVORAK)
 #define RAISE MO(_RAISE)
 #define LOWER MO(_LOWER)
-#define L3 MO(_MO3)
-#define L4 MO(_MO4)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* QWERTY
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * | ESC  |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |  ~   |
+ * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | Tab  |   Q  |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  |   P  |  -   |
+ * |      |   Q  |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  |   P  |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |LCTRL |   A  |LSFT,S|   D  |   F  |   G  |-------.    ,-------|   H  |   J  |   K  |RSFT,L|   ;  |  '   |
- * |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
- * |  L3  |   Z  |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /  |  L4  |
+ * | Tab  | GUI,A| ALT,S|CTL,D |SFT,F |   G  |-------.    ,-------|   H  |SFT,J |CTL,K | ALT,L|GUI,; |      |
+ * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
+ * |      |   Z  |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /  |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *                   |Alt | LGUI | LOWER  | /Space  /       \Enter \  |RAISE | RGUI |BackSP|
+ *                   |      | Esc  | LOWER| /Space  /       \Enter \  |RAISE |BackSP|      |
  *                   |      |      |      |/       /         \      \ |      |      |      |
  *                   `-------------------''-------'           '------''--------------------'
  */
 
  [_QWERTY] = LAYOUT(
-  KC_ESC,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_GRV,
-  KC_TAB,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS,
-  KC_LCTL, KC_A,   LSFT_T(KC_S),    KC_D,    KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    RSFT_T(KC_L),    KC_SCLN, KC_QUOT,
-  L3,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_LBRC,  KC_RBRC,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  L4,
-                      KC_LALT, KC_LGUI, LOWER, KC_SPC,   KC_ENT,  RAISE,  KC_BSPC,  KC_RGUI
+  _______, _______, _______, _______, _______, _______,                         _______, _______, _______, _______, _______, _______,
+  _______,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                            KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, _______,
+   KC_TAB, LGUI_T(KC_A), LALT_T(KC_S), LCTL_T(KC_D), LSFT_T(KC_F), KC_G,           KC_H, LSFT_T(KC_J), LCTL_T(KC_K), LALT_T(KC_L), LGUI_T(KC_SCLN), _______,
+  _______,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, _______,        _______,   KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, _______,
+                                _______, KC_ESC, LOWER, KC_SPC,         KC_ENT,  RAISE,  KC_BSPC,  _______
+),
+/* DVORAK(programmer)
+ * ,-----------------------------------------.                    ,-----------------------------------------.
+ * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
+ * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+ * |      |   ;  |   ,  |   .  |   P  |   Y  |                    |   F  |   G  |   C  |   R  |   L  |      |
+ * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+ * |      |GUI,A |ALT,O |CTL,E |SFT,U |   I  |-------.    ,-------|   D  |SFT,H |CTL,T |ALT,N |GUI,S |      |
+ * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
+ * |      |   '  |   Q  |   J  |   K  |   X  |-------|    |-------|   B  |   M  |   W  |   V  |   Z  |      |
+ * `-----------------------------------------/       /     \      \-----------------------------------------'
+ *                   |      |   ^  |   ^  | /   ^   /       \   ^  \  |   ^  |   ^  |      |
+ *                   |      |      |      |/       /         \      \ |      |      |      |
+ *                   `-------------------''-------'           '------''--------------------'
+ */
+[_DVORAK] = LAYOUT(
+  _______, _______, _______, _______, _______, _______,                         _______, _______, _______, _______, _______, _______,
+  _______, KC_SCLN, KC_COMM, KC_DOT,  KC_P,   KC_Y,                            KC_F,    KC_G,    KC_C,    KC_R,    KC_L, _______,
+  _______, LGUI_T(KC_A), LALT_T(KC_O), LCTL_T(KC_E), LSFT_T(KC_U),    KC_I, LSFT_T(KC_D), LCTL_T(KC_H), LALT_T(KC_T), LGUI_T(KC_N), KC_S, _______,
+  _______, KC_QUOT, KC_Q,    KC_J,    KC_K,    KC_X, _______,          _______,    KC_B,    KC_M,    KC_W,    KC_V,    KC_Z, _______,
+                             _______, KC_ESC, LOWER, KC_SPC,         KC_ENT,  RAISE,  KC_BSPC,  _______
 ),
 /* LOWER
  * ,-----------------------------------------.                    ,-----------------------------------------.
@@ -62,18 +82,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |   !  |   @  |   #  |   $  |   %  |                    |   ^  |   &  |   *  |   (  |   )  |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      |   1  |   2  |   3  |   4  |   5  |-------.    ,-------|   6  |   7  |   8  |   9  |   0  |      |
- * |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
- * |      |      |      |      |      |      |-------|    |-------|   |  |   `  |   +  |   {  |   }  |      |
+ * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
+ * |      |   +  |   =  |   [  |   ]  |   \  |-------|    |-------|   |  |   `  |   +  |   {  |   }  |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *                   |Alt | LGUI | LOWER  | /Space  /       \Enter \  |RAISE | RGUI |BackSP|
+ *                   |      |   ^  |   ^  | /   ^   /       \   ^  \  |   ^  |   ^  |      |
  *                   |      |      |      |/       /         \      \ |      |      |      |
  *                   `-------------------''-------'           '------''--------------------'
  */
+
 [_LOWER] = LAYOUT(
-  _______, _______, _______, _______, _______, _______,                   _______, _______, _______,_______, _______, _______,
+  _______, _______, _______, _______, _______, _______,                         _______, _______, _______, _______, _______, _______,
   _______, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                   KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, _______,
   _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,    KC_8,    KC_9,    KC_0, _______,
-  _______, _______, _______, _______, _______, _______, _______, _______, KC_PIPE, KC_GRAVE, KC_PLUS, KC_LCBR, KC_RCBR, _______,
+  _______, KC_PLUS,  KC_EQL, KC_LBRC, KC_RBRC, KC_BSLS, _______, _______, KC_PIPE, KC_GRAVE, KC_PLUS, KC_LCBR, KC_RCBR, _______,
                              _______, _______, _______, _______, _______,  _______, _______, _______
 ),
 /* RAISE
@@ -83,10 +104,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |                    |  F7  |  F8  |  F9  | F10  | F11  | F12  |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      |      |      |      |      |      |-------.    ,-------| Left | Down |  Up  |Right |      |      |
- * |------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
- * |      |      |      |      |      |      |-------|    |-------|   +  |   =  |   [  |   ]  |   \  |      |
+ * |------+------+------+------+------+------|   ^   |    |   ^   |------+------+------+------+------+------|
+ * |      |      |      |      |      |      |-------|    |-------|   +  |   =  |      |      |      |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *                   |Alt | LGUI | LOWER  | /Space  /       \Enter \  |RAISE | RGUI |BackSP|
+ *                   |      |   ^  |   ^  | /   ^   /       \   ^  \  |   ^  |   ^  |      |
  *                   |      |      |      |/       /         \      \ |      |      |      |
  *                   `-------------------''-------'           '------''--------------------'
  */
@@ -95,75 +116,32 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, _______, _______, _______, _______, _______,                     _______, _______, _______, _______, _______, _______,
   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,                       KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,
   _______, _______, _______, _______, _______, _______,                     KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX, XXXXXXX,
-  _______, _______, _______, _______, _______, _______,   _______, _______, KC_PLUS, KC_EQL,  KC_LBRC, KC_RBRC, KC_BSLS, _______,
+  _______, _______, _______, _______, _______, _______,   _______, _______, KC_PLUS, KC_EQL,  _______, _______, _______, _______,
                              _______, _______, _______,  _______, _______,  _______, _______, _______
 ),
-
-/* MO(3) 
- * ,-----------------------------------------.                    ,-----------------------------------------.
- * |      |      |      |      |      |      |                    | MPRV | VOLD | VOLU | MNXT | MPLY |      |
- * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |      |      |      |      |      |                    |      |MS_BTN1|MS_UP |MS_BTN2|      |      |
- * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |      |      |      |      |      |-------.    ,-------|      |MS_LEFT|MS_DOWN|MS_RGHT|      |      |
- * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
- * |      |      |      |      |      |      |-------|    |-------|      |      |      |      |      |      |
- * `-----------------------------------------/       /     \      \-----------------------------------------'
- *                   |Alt | LGUI | LOWER  | /Space  /       \Enter \  |RAISE | RGUI |BackSP|
- *                   |      |      |      |/       /         \      \ |      |      |      |
- *                   `----------------------------'           '------''--------------------'
- */
-  [_MO3] = LAYOUT(
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, KC_MPLY, XXXXXXX,
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, MS_BTN1, MS_UP, MS_BTN2, XXXXXXX, XXXXXXX,
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, MS_LEFT, MS_DOWN, MS_RGHT, XXXXXXX, XXXXXXX,
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                             _______, _______, _______, _______, _______,  _______, _______, _______
-  ),
-/* MO(4) 
- * ,-----------------------------------------.                    ,-----------------------------------------.
- * |      | MCTL |      |      |      |      |                    |      |      |      |      |      |      |
- * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
- * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |      |      |      |      |      |-------.    ,-------|      |      |      |      |      |      |
- * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
- * |      |      |      |      |      |      |-------|    |-------|      |      |      |      |      |      |
- * `-----------------------------------------/       /     \      \-----------------------------------------'
- *                   |Alt | LGUI | LOWER  | /Space  /       \Enter \  |RAISE | RGUI |BackSP|
- *                   |      |      |      |/       /         \      \ |      |      |      |
- *                   `----------------------------'           '------''--------------------'
- */
-  [_MO4] = LAYOUT(
-  XXXXXXX, KC_MCTL, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                             _______, _______, _______, _______, _______,  _______, _______, _______
-  ),
 /* ADJUST 
  * This layer is for debugging and making adjustments.
   * This layer can only be assessed by pressing the MO(1) and MO(2) keys.
   * 
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * |DT_PRNT|DT_UP|DT_DOWN|      |      |      |                    |      |      |      |      |      |      |
+ * |DT_PRT|      |      |      |      |      |                    |      |Qwerty|Dvorak| VOLU | VOLD |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
+ * |DT_DN |      |      |      |      |      |                    |      | MSB1 | MSUP | MSB2 |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |      |      |      |      |      |-------.    ,-------|      |      |      |      |      |      |
- * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
- * |      |      |      |      |      |      |-------|    |-------|      |      |      |      |      |      |
+ * |DT_UP |      |      |      |      |      |-------.    ,-------|      |MSLFT | MSDN | MSRT |      |      |
+ * |------+------+------+------+------+------|  Mac  |    |  Win  |------+------+------+------+------+------|
+ * |NKTOGG|      |      |      |      |      |-------|    |-------|      |      |      |      |      |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *                   |Alt | LGUI | LOWER  | /Space  /       \Enter \  |RAISE | RGUI |BackSP|
+ *                   |      |      |      | /       /       \      \  |      |      |      |
  *                   |      |      |      |/       /         \      \ |      |      |      |
  *                   `----------------------------'           '------''--------------------'
  */
   [_ADJUST] = LAYOUT(
-  DT_PRNT, DT_UP, DT_DOWN, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                             _______, _______, _______, _______, _______,  _______, _______, _______
+  DT_PRNT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX,  QWERTY,  DVORAK, KC_VOLU, KC_VOLD, XXXXXXX,
+  DT_UP,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX,  MS_BTN1, MS_UP, MS_BTN2, XXXXXXX, XXXXXXX,
+  DT_DOWN, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, MS_LEFT, MS_DOWN, MS_RGHT, XXXXXXX, XXXXXXX,
+  NK_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, AG_NORM, AG_SWAP, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+                             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
   )
 };
 
@@ -240,9 +218,12 @@ const char *read_keylogs(void) {
 static void render_status(void) {
     oled_write_P(PSTR("layer "), false);
 
-    switch (get_highest_layer(layer_state)) {
+    switch (get_highest_layer(layer_state|default_layer_state)) {
         case _QWERTY:
             oled_write_P(PSTR("QWERTY"), false);
+            break;
+        case _DVORAK:
+            oled_write_P(PSTR("DVORAK"), false);
             break;
         case _LOWER:
             oled_write_P(PSTR("LOWER "), false);

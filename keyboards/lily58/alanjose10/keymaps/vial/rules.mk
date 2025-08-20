@@ -1,6 +1,6 @@
 LTO_ENABLE = yes
 QMK_SETTINGS = yes
-
+# VIAL_KEYBOARD = lily58_alanjose10
 VIA_ENABLE = yes
 VIAL_ENABLE = yes
 OLED_ENABLE = yes
