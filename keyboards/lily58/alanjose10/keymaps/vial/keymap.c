@@ -124,7 +124,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   * This layer can only be assessed by pressing the MO(1) and MO(2) keys.
   * 
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * |DT_PRT|      |      |      |      |      |                    |      |Qwerty|Dvorak| VOLU | VOLD |      |
+ * |DT_PRT|      |      |      |      |      |                    |      |Qwerty|Dvorak| VOLD | VOLU |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |DT_DN |      |      |      |      |      |                    |      | MSB1 | MSUP | MSB2 |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
@@ -137,7 +137,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                   `----------------------------'           '------''--------------------'
  */
   [_ADJUST] = LAYOUT(
-  DT_PRNT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX,  QWERTY,  DVORAK, KC_VOLU, KC_VOLD, XXXXXXX,
+  DT_PRNT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX,  QWERTY,  DVORAK, KC_VOLD, KC_VOLU, XXXXXXX,
   DT_UP,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX,  MS_BTN1, MS_UP, MS_BTN2, XXXXXXX, XXXXXXX,
   DT_DOWN, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, MS_LEFT, MS_DOWN, MS_RGHT, XXXXXXX, XXXXXXX,
   NK_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, AG_NORM, AG_SWAP, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
