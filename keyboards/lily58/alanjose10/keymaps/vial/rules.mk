@@ -1,3 +1,4 @@
+CONVERT_TO=sparkfun_pm2040
 LTO_ENABLE = yes
 QMK_SETTINGS = yes
 # VIAL_KEYBOARD = lily58_alanjose10
