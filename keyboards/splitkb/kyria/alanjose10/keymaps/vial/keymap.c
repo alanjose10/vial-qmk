@@ -21,7 +21,7 @@ enum layers {
     _NAV, 
     _FKEYS, 
     _ADJUST,
-    _BLANK1,
+    _SHORTS,
     _BLANK2
 };
 
@@ -58,8 +58,8 @@ enum layers {
 
 // Shift when held, Space when tapped
 #define LSFT_SPC MT(MOD_LSFT, KC_SPC)
-// Shift when held, Enter when tapped
-#define RSFT_ENT MT(MOD_RSFT, KC_ENT)
+// Shift when held, Backspace when tapped
+#define RSFT_BSPC MT(MOD_RSFT, KC_BSPC)
 
 #define DSK_RGT LCTL(KC_RIGHT)
 #define DSK_LFT LCTL(KC_LEFT)
@@ -68,6 +68,12 @@ enum layers {
 #define CTL_DWN LCTL(KC_DOWN)
 #define SPOTL LGUI(KC_SPC)
 #define SCRNSHT LSG(KC_4)
+
+#define _UNDO LCTL(KC_Z)
+#define _CUT LCTL(KC_X)
+#define _COPY LCTL(KC_C)
+#define _PASTE LCTL(KC_V)
+#define _FIND LCTL(KC_F)
 
 
 // Note: LAlt/Enter (ALT_ENT) is not the same thing as the keyboard shortcut Alt+Enter.
@@ -80,22 +86,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Base Layer: Programmer Dvorak
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        | ; :  | , <  | . >  |   P  |   Y  |                              |   F  |   G  |   C  |   R  |   L  |        |
+ * | DsktpL | ; :  | , <  | . >  |   P  |   Y  |                              |   F  |   G  |   C  |   R  |   L  | DsktpR |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * | SPOTL  |      | CTL/ | ALT/ | GUI/ |      |                              |      | GUI/ | ALT/ | CTL/ |      |        |
  * |        |   A  |   O  |   E  |   U  |   I  |                              |   D  |   H  |   T  |   N  |   S  |        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * | DsktpL | ' "  |   Q  |   J  |   K  |   X  | SCRST|CapsLk|  |F-keys|      |   B  |   M  |   W  |   V  |   Z  | DsktpR |
+ * | MO(5)  | ' "  |   Q  |   J  |   K  |   X  | SCRST|CapsLk|  |F-keys|      |   B  |   M  |   W  |   V  |   Z  |        |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        | MO(5)| Esc  |  Tab | LSft/| SYM  |  |  NAV | RSft/| Bksp | Del  | MO(6)|
- *                        |      |      |      | Space|      |  |      |  Ent |      |      |      |
+ *                        |      | SYM  | LSft/| Tab  | ESC  |  |  Del | Ent  | RSft/| NAV  | MO(6)|
+ *                        |      |      | Space|      |      |  |      |      | Bksp |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
     [_BASE] = LAYOUT(
-     _______ ,KC_SCLN, KC_COMM,  KC_DOT,   KC_P ,   KC_Y ,                                        KC_F,   KC_G ,  KC_C ,   KC_R ,  KC_L , _______,
+     DSK_LFT ,KC_SCLN, KC_COMM,  KC_DOT,   KC_P ,   KC_Y ,                                        KC_F,   KC_G ,  KC_C ,   KC_R ,  KC_L , _______,
       SPOTL  , KC_A  , HRM_O  ,  HRM_E ,  HRM_U ,   KC_I ,                                        KC_D,  HRM_H , HRM_T ,  HRM_N ,  KC_S , _______,
-     DSK_LFT ,KC_QUOTE, KC_Q  ,  KC_J  ,   KC_K ,   KC_X , SCRNSHT,KC_CAPS,     FKEYS  , _______,KC_B,   KC_M ,  KC_W ,   KC_V ,  KC_Z , DSK_RGT,
-                                 MO(5) , KC_ESC , KC_TAB , LSFT_SPC,  SYM  ,     NAV   ,RSFT_ENT, KC_BSPC , KC_DEL , MO(6)
+      MO(5)  ,KC_QUOTE, KC_Q  ,  KC_J  ,   KC_K ,   KC_X , SCRNSHT,KC_CAPS,     FKEYS  , _______, KC_B,   KC_M ,  KC_W ,   KC_V ,  KC_Z , DSK_RGT,
+                               _______ ,  SYM   ,LSFT_SPC, KC_TAB , KC_ESC,     KC_DEL ,KC_ENT  , RSFT_BSPC , NAV , MO(6)
     ),
 
 /*
@@ -124,9 +130,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Nav Layer: Media, navigation
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        | MCtl | MSB1 | MsUP | MSB2 | MWUp |                              | Home | PgDn | PgUp | End  |      |        |
+ * |        | MCtl | MSB1 | MsUP | MSB2 | MWDn |                              | Home | PgDn | PgUp | End  |      |        |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        | LPad |      | MsDN | MsRT | MWDn |                              |   ←  |  ↓   |   ↑  |   →  |      |        |
+ * |        | LPad |      | MsDN | MsRT | MWUp |                              |   ←  |  ↓   |   ↑  |   →  |      |        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
  * |        |      |      |      |      |      | PrtS |      |  |      |      |M Prev|M Stop|M PlPs|M Next|VolMut|        |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
@@ -135,9 +141,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_NAV] = LAYOUT(
-      _______, KC_MCTL, MS_BTN1,  MS_UP , MS_BTN2, MS_WHLU,                                     KC_HOME, KC_PGDN, KC_PGUP ,  KC_END, _______, _______,
-      _______, KC_LPAD, MS_LEFT, MS_DOWN, MS_RGHT, MS_WHLD,                                     KC_LEFT, KC_DOWN, KC_UP   , KC_RGHT, _______, _______,
-      _______, _______, _______, CMD_TAB, CMD_TIL, CTL_DWN, KC_PSCR, _______, _______, _______,  KC_MPRV, KC_MSTP, KC_MPLY , KC_MNXT, _______, _______,
+      _______, KC_MCTL, MS_BTN1,  MS_UP , MS_BTN2, MS_WHLD,                                     KC_HOME, KC_PGDN, KC_PGUP ,  KC_END, _______, _______,
+      _______, KC_LPAD, MS_LEFT, MS_DOWN, MS_RGHT, MS_WHLU,                                     KC_LEFT, KC_DOWN, KC_UP   , KC_RGHT, _______, _______,
+      _______, _______, _______, CMD_TAB, CMD_TIL, CTL_DWN, KC_PSCR, _______, _______, _______, KC_MPRV, KC_MSTP, KC_MPLY , KC_MNXT, _______, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
@@ -166,11 +172,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Adjust Layer
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |      |      |      |      |      |                              |      | VolUp| BtUP |      |      |        |
+ * |        |      |      |      |      |      |                              |      | Vol+ | Bt+  |      |      |        |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        |      |      |      |      |      |                              |      | VolUp| BtDN |      |      |        |
+ * |        |      |      |      |      |      |                              |      | Vol- | Bt-  |      |      |        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |      |  |      |      |      |VolMut|      |      |      |        |
+ * |        |      |      |      |      |      |      |      |  |      |      |      | Mute |      |      |      |        |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        |      |      |      |      |      |  |      |      |      |      |      |
@@ -188,18 +194,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-------------------------------------------.                              ,-------------------------------------------.
  * |        |      |      |      |      |      |                              |      |      |      |      |      |        |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        |      |      |      |      |      |                              |      |      |      |      |      |        |
+ * |        |      |      |      | FIND |      |                              |      |      |      |      |      |        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |      |  |      |      |      |      |      |      |      |        |
+ * |        | UNDO | CUT  | COPY | PST  |      |      |      |  |      |      |      |      |      |      |      |        |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
-    [_BLANK1] = LAYOUT(
+    [_SHORTS] = LAYOUT(
       _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
-      _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
-      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+      _______, _______, _______, _______,  _FIND , _______,                                     _______, _______, _______, _______, _______, _______,
+      _______,  _UNDO ,   _CUT ,  _COPY , _PASTE , _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 /*
@@ -210,7 +216,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |        |      |      |      |      |      |                              |      |      |      |      |      |        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |      |  |      |      |      |      |      |      |      |        |
+ * |        | UNDO |      |      |      |      |      |      |  |      |      |      |      |      |      |      |        |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        |      |      |      |      |      |  |      |      |      |      |      |
@@ -262,6 +268,9 @@ bool oled_task_user(void) {
                 break;
             case _ADJUST:
                 oled_write_P(PSTR("Adjust\n"), false);
+                break;
+            case _SHORTS:
+                oled_write_P(PSTR("Shortcuts\n"), false);
                 break;
             default:
                 oled_write_P(PSTR("Undefined\n"), false);
