@@ -165,7 +165,7 @@ static void render_layer_status(void) {
 
 
 
-#define KEYLOG_LEN 6
+#define KEYLOG_LEN 12
 char     keylog_str[KEYLOG_LEN] = {};
 uint8_t  keylogs_str_idx        = 0;
 uint16_t log_timer              = 0;
