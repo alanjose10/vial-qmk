@@ -22,3 +22,9 @@
 #define VIAL_UNLOCK_COMBO_COLS { 6, 6 }
 #define DYNAMIC_KEYMAP_LAYER_COUNT 7
 #define VIAL_TAP_DANCE_ENTRIES 20
+
+// Enable permissive hold
+// If you press a dual-role key, tap another key (press and release) and then release the dual-role key, 
+// all within the tapping term, by default the dual-role key will perform its tap action.
+// If the PERMISSIVE_HOLD option is enabled, the dual-role key will perform its hold action instead.
+#define PERMISSIVE_HOLD
