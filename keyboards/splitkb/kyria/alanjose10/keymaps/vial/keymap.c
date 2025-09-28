@@ -1,4 +1,3 @@
-#include <stdint.h>
 #include QMK_KEYBOARD_H
 
 enum layers { 
@@ -43,16 +42,6 @@ enum layers {
 
 #define DSK_RGT LCTL(KC_RIGHT)
 #define DSK_LFT LCTL(KC_LEFT)
-#define SCRNSHT LSG(KC_4)
-
-#define _UNDO LGUI(KC_Z)
-#define _CUT LGUI(KC_X)
-#define _COPY LGUI(KC_C)
-#define _PASTE LGUI(KC_V)
-#define _FIND LGUI(KC_F)
-#define _SAVE LGUI(KC_S)
-#define _BACK LGUI(KC_LCBR)
-#define _FORW LGUI(KC_RCBR)
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -80,7 +69,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
       KC_LSFT  ,KC_QUOTE, KC_Q  ,  KC_J  ,   KC_K ,   KC_X , KC_ENT,KC_BSPC,     FKEYS  , KC_CAPS, KC_B,   KC_M ,  KC_W ,   KC_V ,  KC_Z , _______,
 
-                    KC_LCTL  , KC_LGUI  ,LT_SYM_TAB, LSFT_SPC , LT_SHORT_ESC,  LT_NAV_ESC ,RSFT_BSPC  , LT_SYM_ENT , KC_RALT , KC_DEL
+                    KC_LCTL  , KC_LGUI  , LSFT_SPC, LT_SYM_TAB , LT_SHORT_ESC,  LT_NAV_ESC , LT_SYM_ENT , RSFT_BSPC, KC_DEL, KC_RALT 
     ),
 /*
  * Base Layer: Programmer Dvorak (no home row mods)
@@ -106,7 +95,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
       KC_LSFT  ,KC_QUOTE, KC_Q  ,  KC_J  ,   KC_K ,   KC_X , KC_ENT,KC_BSPC,     FKEYS  , KC_CAPS, KC_B,   KC_M ,  KC_W ,   KC_V ,  KC_Z , _______,
 
-                    KC_LCTL  , KC_LGUI  ,LT_SYM_TAB, LSFT_SPC , LT_SHORT_ESC,  LT_NAV_ESC ,RSFT_BSPC  , LT_SYM_ENT , KC_RALT , KC_DEL
+                    KC_LCTL  , KC_LGUI  , LSFT_SPC, LT_SYM_TAB , LT_SHORT_ESC,  LT_NAV_ESC , LT_SYM_ENT , RSFT_BSPC, KC_DEL, KC_RALT 
     ),
 
 /*
@@ -125,11 +114,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_SYMBOLS] = LAYOUT(
-     _______ , KC_ASTR, KC_EQL , KC_LPRN, KC_LPRN,  KC_LBRC,                                    KC_RBRC, KC_LCBR, KC_RCBR, KC_SLSH, KC_PLUS, _______,
+     _______ , KC_ASTR, KC_EQL , KC_LPRN, KC_RPRN,  KC_LBRC,                                    KC_RBRC, KC_LCBR, KC_RCBR, KC_SLSH, KC_PLUS, _______,
 
      _______ , KC_7 ,  HRM_5 , HRM_3  ,  HRM_1 ,  KC_9  ,                                       KC_8   , HRM_0  ,  HRM_2 ,  HRM_4 , KC_6   , _______,
 
-     _______ , KC_EXLM,  KC_AT , KC_HASH, KC_DLR , KC_PERC, _______, _______, _______, _______, KC_CIRC, KC_AMPR, KC_UNDS, KC_MINS, KC_BSLS, _______,
+     _______ , KC_EXLM,  KC_AT , KC_HASH, KC_DLR , KC_PERC, _______, _______, _______, _______, KC_CIRC, KC_AMPR, KC_UNDS, KC_MINS, KC_QUES, _______,
 
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
@@ -159,7 +148,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Shortcuts Layer: Common shortcuts
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |      | BACK | FORW |      |      |                              |      |      |      |      |      |        |
+ * |        |  *   | BACK | FORW |  *   |  *   |                              |      |      |      |      |      |        |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |        |      | SAVE |      | FIND |      |                              |      |      |      |      |      |        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
@@ -170,9 +159,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_SHORTS] = LAYOUT(
-      _______, _______,  _BACK ,  _FORW , _______, _______,                                     _______, _______, _______, _______, _______, _______,
-      _______, _______,  _SAVE , _______,  _FIND , _______,                                     _______, _______, _______, _______, _______, _______,
-      SCRNSHT,  _UNDO ,   _CUT ,  _COPY , _PASTE , _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+      _______, SGUI(KC_LBRC),  LGUI(KC_LBRC) ,  LGUI(KC_RBRC) , SGUI(KC_RBRC), LAG(KC_B),                                     _______, _______, _______, _______, _______, _______,
+      _______, _______,  LGUI(KC_S) , _______,  LGUI(KC_F) , _______,                                     _______, _______, _______, _______, _______, _______,
+      SGUI(KC_4),  LGUI(KC_Z) ,   LGUI(KC_X) ,  LGUI(KC_C) , LGUI(KC_V) , _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 

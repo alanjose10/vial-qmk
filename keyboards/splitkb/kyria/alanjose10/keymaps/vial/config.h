@@ -28,3 +28,4 @@
 // all within the tapping term, by default the dual-role key will perform its tap action.
 // If the PERMISSIVE_HOLD option is enabled, the dual-role key will perform its hold action instead.
 #define PERMISSIVE_HOLD
+#define HOLD_ON_OTHER_KEY_PRESS
